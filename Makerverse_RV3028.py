@@ -8,7 +8,7 @@
 #     - Configure trickle charger for onboard supercap
 #     - Configure frequency of CLK output pin
 
-from machine import I2C, Pin
+from machine import SoftI2C, I2C, Pin
 
 _ADDR = 0x52
 _SEC = 0x00
@@ -61,13 +61,13 @@ def _bcdEncode(val):
 
 class Makerverse_RV3028():
     def __init__(self, i2c = None): 
-        if isinstance(i2c, I2C) is False:
+        if not (isinstance(i2c, I2C) or isinstance(i2c, SoftI2C)):
             print("RV3028 requires a valid i2c device")
             raise TypeError
         self.i2cDev = i2c
         
         try:
-            part = int(i2c.readfrom_mem(_ADDR, _ID, 1))
+            part = int(i2c.readfrom_mem(_ADDR, _ID, 1), 16)
         except Exception as e:
             print("Failed to find RV3028 on i2c bus") 
             raise e
