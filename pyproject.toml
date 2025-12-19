@@ -1,0 +1,18 @@
+[project]
+name = "Makerverse_RV3028"
+version = "0.0.1"
+authors = [
+  { name="Core Electronics Pty Ltd." },
+]
+description = "RV3028 Python Module"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: Implementation :: MicroPython",
+]
+license = "MIT"
+license-files = ["LICENSE.md"]
+
+[project.urls]
+Homepage = "https://github.com/orwell-int/CE-Makerverse-RV3028-MicroPython-Module"
