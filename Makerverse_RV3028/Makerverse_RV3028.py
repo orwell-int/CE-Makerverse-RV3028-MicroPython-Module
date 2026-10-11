@@ -105,7 +105,7 @@ class Makerverse_RV3028:
         return self._read(_UNIX, 4)
 
     def setUnixTime(self, time):
-        self._write(_UNIX, time.to_bytes(4, "little", False))
+        self._write(_UNIX, time.to_bytes(4, "little"))
 
     def setBatterySwitchover(self, state=True):
         tmp = self._read(_EE_BACKUP, 1)
@@ -116,7 +116,7 @@ class Makerverse_RV3028:
         else:
             print("Parameter State must be True or False")
             return
-        self._write(_EE_BACKUP, tmp.to_bytes(1, "little", False))
+        self._write(_EE_BACKUP, tmp.to_bytes(1, "little"))
 
     def setTrickleCharger(self, state=True):
         tmp = self._read(_EE_BACKUP, 1)
@@ -127,7 +127,7 @@ class Makerverse_RV3028:
         else:
             print("Parameter State must be True or False")
             return
-        self._write(_EE_BACKUP, tmp.to_bytes(1, "little", False))
+        self._write(_EE_BACKUP, tmp.to_bytes(1, "little"))
 
     def configTrickleCharger(self, R="3k"):
         tmp = self._read(_EE_BACKUP, 1)
@@ -143,7 +143,7 @@ class Makerverse_RV3028:
         else:
             print("R parameter must be '3k', '5k', '9k', or '15k'")
             return
-        self._write(_EE_BACKUP, tmp.to_bytes(1, "little", False))
+        self._write(_EE_BACKUP, tmp.to_bytes(1, "little"))
 
     def configClockOutput(self, clk=32768):
         tmp = self._read(_EE_CLKOUT, 1)
@@ -166,7 +166,7 @@ class Makerverse_RV3028:
                 "clk parameter must be 32678, 8192, 1024, 64,32, 1, or 0. Values are in units of Hz."
             )
             return
-        self._write(_EE_CLKOUT, tmp.to_bytes(1, "little", False))
+        self._write(_EE_CLKOUT, tmp.to_bytes(1, "little"))
 
     def resetEventInterrupt(self, edge="falling"):
         # Clear EVF, _STATUS bit 1
@@ -227,7 +227,7 @@ class Makerverse_RV3028:
                 hrs = _clearBit(hrs, 5)
             elif time[3] == "PM":
                 hrs = _setBit(hrs, 5)
-        self._write(_CTRL2, tmp.to_bytes(1, "little", False))
+        self._write(_CTRL2, tmp.to_bytes(1, "little"))
         sec = _bcdEncode(time[2])
         mins = _bcdEncode(time[1])
         t = [sec, mins, hrs]
@@ -239,7 +239,7 @@ class Makerverse_RV3028:
         else:
             t = self._read(_SECTS, 3)
         hrFormat = _readBit(self._read(_CTRL2, 1), 1)
-        t = t.to_bytes(3, "little", False)
+        t = t.to_bytes(3, "little")
         mins = _bcdDecode(t[1])
         secs = _bcdDecode(t[0])
         hrs = _bcdDecode(t[2])
@@ -278,7 +278,7 @@ class Makerverse_RV3028:
             tmp = self._read(_DAY, 3)
         else:
             tmp = self._read(_DAYTS, 3)
-        date = tmp.to_bytes(3, "little", False)
+        date = tmp.to_bytes(3, "little")
         day = _bcdDecode(date[0])
         month = _bcdDecode(date[1])
         year = _bcdDecode(date[2])
